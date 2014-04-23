@@ -9,6 +9,7 @@ import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.signup.form;
+import views.html.signup.summary;
 
 /**
  * @author <a href="mailto:haithanh0809@gmail.com">Nguyen Thanh Hai</a>
@@ -57,7 +58,8 @@ public class SignUp extends Controller {
     if (filledForm.hasErrors()) {
       return badRequest(form.render(filledForm));
     } else {
-      return ok();
+      User createdUser = filledForm.get();
+      return ok(summary.render(createdUser));
     }
   }
 }
