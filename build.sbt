@@ -6,7 +6,8 @@ libraryDependencies ++= Seq(
   javaJdbc,
   javaEbean,
   cache,
-	"org.sme.tools" % "jenkins" % "1.0-SNAPSHOT"
+	"org.sme" % "tools" % "1.0-SNAPSHOT",
+	"org.apache.cloudstack" % "cloud-api" % "4.3.0"
 )
 
 resolvers += (

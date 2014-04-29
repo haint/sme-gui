@@ -5,27 +5,28 @@
 <html>
   
   <head>
-    <title>Form samples</title>
+    <title>Cloud Test Base Service</title>
+    
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/bootstrap.css")">
-    <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
-    <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/docs.css")">
+    <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("img/favicon.png")">
     <script type="text/javascript" src="@routes.Assets.at("javascripts/jquery-1.9.0.min.js")"></script>
+    <script type="text/javascript" src="@routes.Assets.at("javascripts/bootstrap.js")"></script>
   </head>
   
   <body>
   
-    <div class="topbar">
-      <div class="fill">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
         <div class="container">
-          <a class="brand" href="@routes.Application.index()">Home</a>
-          <ul class="nav">
-            <li class="@("active".when(nav == "signup"))">
-              <a href="@routes.SignUp.blank()">Sign Up</a>
-            </li>
-            <li class="@("active".when(nav == "contact"))">
-              <a href="@routes.Contacts.blank()">Contacts</a>
-            </li>
-          </ul>
+          <a class="brand" href="@routes.Application.index()">Cloud Testing Service</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li class="active">
+                <a href="@routes.Application.index()">HOME</a>
+              </li>
+            </ul>
+          </div>        
         </div>
       </div>
     </div>
@@ -34,26 +35,23 @@
 
       <div class="content">
 
-        <div class="page-header">
           <h1>@title</h1>
-        </div>
 
         <div class="row">
-          <div class="span14">
+          <div class="span12">
             @content
           </div>
         </div>
 
       </div>
-  
-      <footer>
+    </div>
+
+    <footer class="footer">
+      <div class="container">
         <p>
           <a href="javascript:void(0)">SME CLOUD TEST SERVICE</a>
         </p>
-  
-      </footer>
-  
-    </div>
-
+      </div>
+    </footer>
   </body>
 </html>
