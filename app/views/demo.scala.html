@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <title> AdminFlare - Components </title>
+    <meta content="" name="description">
+    <meta content="width=device-width" name="viewport">
+    
+    <!-- <script type="text/javascript" src="http://adminflare-130.herokuapp.com/assets/javascripts/1.3.0/modernizr-jquery.min.js"></script> -->
+    
+    <script type="text/javascript" src="@routes.Assets.at("/public", "javascripts/jquery-1.9.0.min.js")"></script>
+    
+    <script type="text/javascript" src="@routes.Assets.at("/public", "javascripts/bootstrap.min.js")"></script>
+    
+    <script type="text/javascript" src="@routes.Assets.at("/public", "javascripts/adminflare.min.js")"></script>
+    
+    <link rel="stylesheet" type="text/css" media="all" href="@routes.Assets.at("/public", "stylesheets/bootstrap.min.css")">
+    <link rel="stylesheet" type="text/css" media="all" href="@routes.Assets.at("/public", "stylesheets/adminflare.min.css")">
+    <link rel="stylesheet" type="text/css"  href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,300,600,700">
+
+    <script type="text/javascript">
+      $(document).ready(function() {
+    	  prettyPrint();
+      });
+    </script>  
+  </head>
+  
+  <body class=" fluid-layout fluid-layout fluid-layout">
+    
+    <nav id="left-panel" style="height: 100%; position: fixed; top: 0px; left: 0px;">
+    <div id="left-panel-content" style="overflow: hidden;">
+      <ul style="transition-property: -moz-transform; transform-origin: 0px 0px 0px; transform: translate(0px, 0px);">
+        <li>
+          <a href="dashboard.html"><span class="icon-frown"></span>Dashboard</a>
+        </li>
+        <li>
+          <a href="layout.html"><span class="icon-th-large"></span>Layout</a>
+        </li>
+        <li>
+          <a href="typography.html"><span class="icon-font"></span>Typography</a>
+        </li>
+        <li>
+          <a href="forms.html"><span class="icon-edit"></span>Forms</a>
+        </li>
+        <li>
+          <a href="tables.html"><span class="icon-table"></span>Tables</a>
+        </li>
+        
+        <li class="active">
+          <a href="components.html"><span class="icon-inbox"></span>Components</a>
+        </li>
+        <li>
+          <a href="javascript.html"><span class="icon-cog"></span>JavaScript</a>
+        </li>
+        <li class="lp-dropdown">
+          <a id="extras-dropdown" class="lp-dropdown-toggle" href="#"><span class="icon-reorder"></span>Extras</a>
+          
+        </li>
+        <li class="lp-dropdown">
+          <a id="pages-dropdown" class="lp-dropdown-toggle" href="#"><span class="icon-file-alt"></span>Pages</a>
+          
+        </li>
+      </ul>
+    </div>
+    <div class="icon-caret-down"></div>
+    <div class="icon-caret-up"></div>
+    </nav>
+  </body>
+</html>
