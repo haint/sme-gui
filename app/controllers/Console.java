@@ -3,7 +3,6 @@
  */
 package controllers;
 
-import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,9 +15,10 @@ import org.sme.tools.cloudstack.AsyncJobAPI;
 import org.sme.tools.cloudstack.VirtualMachineAPI;
 import org.sme.tools.cloudstack.model.Job;
 import org.sme.tools.cloudstack.model.VirtualMachine;
-import org.sme.tools.jenkins.JenkinsJob;
+import org.sme.tools.jenkins.JenkinsMavenJob;
 import org.sme.tools.jenkins.JenkinsMaster;
 import org.sme.tools.knife.Knife;
+import org.sme.tools.ssh.SSHClient;
 
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -90,67 +90,71 @@ public class Console extends Controller {
     public void run() {
       BlockingQueue<String> queue = Console.QueueHolder.get(name);
       try {
-        String response[] = VirtualMachineAPI.quickDeployVirtualMachine(name, "jenkins-slave", offering, "Medium");
+        String response[] = VirtualMachineAPI.quickDeployVirtualMachine(name, "jenkins-slave", offering, null);
         String vmId = response[0];
         String jobId = response[1];
         Job job = AsyncJobAPI.queryAsyncJobResult(jobId);
+       
         while (!job.getStatus().done()) {
           job = AsyncJobAPI.queryAsyncJobResult(jobId);
         }
 
         if (job.getStatus() == org.apache.cloudstack.jobs.JobInfo.Status.SUCCEEDED) {
+          
           VirtualMachine vm = VirtualMachineAPI.findVMById(vmId, VMDetails.nics);
+          
+          //remove `waiting` flag
           queue.poll();
-          String ip = vm.nic[0].ipAddress;
-          queue.put("Created VM: " + vmId + "\n");
-          queue.put("Public IP: " + ip  + "\n");
-//          Thread.sleep(10 * 1000);
+          
+          String ipAddress = vm.nic[0].ipAddress;
+          queue.put("Created VM: " + vmId);
+          queue.put("Public IP: " + ipAddress);
+
           Knife knife = Knife.getInstance();
-          queue.put("Checking sshd on " + ip);
-          while(true) {
-            try {
-              Socket socket = new Socket(ip, 22);
-              socket.close();
-              break;
-            } catch(Exception e) {
-              queue.put(".");
-            } 
-          }
-          if (knife.bootstrap(vm.nic[0].ipAddress, vm.name, queue, "jenkins-slave", "git")) {
-//            String ip = "172.27.4.71";
-            queue.put(ip);
+          
+          queue.put("Checking sshd on " + ipAddress);
+          
+          
+          if (SSHClient.checkEstablished(ipAddress, 22, 120) 
+              && knife.bootstrap(vm.nic[0].ipAddress, vm.name, queue, "jenkins-slave-gui", "selenium-grid")) {
+            
             JenkinsMaster jkMaster = new JenkinsMaster("git.sme.org", "http", 8080);
             String jobName = "job-" + name;
-            JenkinsJob jkJob = new JenkinsJob(jkMaster, jobName, ip, git, "clean install", "");
-            int buildNumber = jkMaster.createMavenJobFromGit(jkJob);
             
-            Thread.sleep(10 * 1000); //for job submitted
+            JenkinsMavenJob jkJob = new JenkinsMavenJob(jkMaster, jobName, ipAddress, git, "clean install -Ptest", "");
+            int buildNumber = jkJob.submit();
+            
+            if (buildNumber == -1) {
+              queue.put(jkJob.getName() + " has created unsuccessful");
+              queue.put("exit");
+            }
             
             queue.put("Progress: " + jkJob.getName() + "\n");
+            
+            int start = 0;
+            int last = 0;
+            byte[] bytes = null;
+            
             while(jkJob.isBuilding(buildNumber)) {
-              Thread.sleep(1 * 1000);
-              int start = 0;
-              byte[] bytes = jkJob.getConsoleOutput(buildNumber, start);
-              queue.put(new String(bytes));
-              queue.put("\n");
-              while (true) {
-                Thread.sleep(1 * 1000);
-                start += bytes.length;
-                int last = bytes.length;
-                bytes = jkJob.getConsoleOutput(buildNumber, start);
-                byte[] next = new byte[bytes.length - last];
-                System.arraycopy(bytes, last, next, 0, next.length);
-                if (next.length > 0) { 
-                  String output = new String(next);
-                  queue.put(output);
-                  queue.put("\n");
-                  if (output.indexOf("channel stopped") != -1) {
-                    queue.put(jkJob.getName() + " finished");
-                    queue.put("exit");
-                    break;
-                  }
+              
+              bytes = jkJob.getConsoleOutput(buildNumber, start);
+              last = bytes.length;
+              byte[] next = new byte[last - start];
+              System.arraycopy(bytes, start, next, 0, next.length);
+              
+              start += (last - start);
+              
+              //
+              if (next.length > 0) { 
+                String output = new String(next).trim();
+                queue.put(output);
+                if (output.indexOf("channel stopped") != -1) {
+                  queue.put(jkJob.getName() + " finished");
+                  queue.put("exit");
+                  break;
                 }
               }
+              //
             }
             queue.put(jkJob.getName() + " finished");
             queue.put("exit");

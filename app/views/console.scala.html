@@ -32,7 +32,6 @@
                   async: false,
                   success: function(data) {
                     $("#system-@slave").append(data);
-                    window.scrollTo(50,document.body.scrollHeight);
                   },
                   error: function() {
                     console.log("Abort...............");
@@ -54,7 +53,6 @@
                         async: true,
                         success: function(data) {
                           $("#system-@slave").append(data);
-                          window.scrollTo(50,document.body.scrollHeight);
                         },
                         error: function() {
                           console.log("Abort....");
