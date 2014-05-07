@@ -1,0 +1,365 @@
+<script type="text/javascript">
+$(document).ready(function() {
+  //Easy Pie Charts
+  var easyPieChartDefaults = {
+      animate: 2000,
+      scaleColor: false,
+      lineWidth: 8,
+      lineCap: 'round',
+      size: 100,
+      trackColor: '#e5e5e5'
+  }
+  $("#easy-pie-chart-1").easyPieChart($.extend({}, easyPieChartDefaults, {
+    barColor: '#3da0ea'
+  }));
+  $("#easy-pie-chart-2").easyPieChart($.extend({}, easyPieChartDefaults, {
+    barColor: '#e7912a'
+  }));
+  
+  //Visits Chart
+  var visitsChartData = [{
+    //Visits
+    label: 'Visits',
+    data: [
+      [6,1390],
+      [6, 1380],
+      [7, 1670],
+      [8, 1960],
+      [9, 2150],
+      [10, 2540],
+      [11, 2230],
+      [12, 2020],
+      [13, 1950],
+      [14, 1910],
+      [15, 0]
+    ]
+  }, {
+    //Returning visits
+    label: 'Returning Visits',
+    data: [
+      [6, 500],
+      [7, 600],
+      [8, 550],
+      [9, 600],
+      [10, 800],
+      [11, 900],
+      [12, 800],
+      [13, 850],
+      [14, 830],
+      [15, 0]
+    ],
+    filledPoints: true
+  }];
+  
+  $("#visits-line-chart").simplePlot(visitsChartData, {
+    series: {
+      points: {
+        show: true,
+        radius: 5
+      },
+      lines: {
+        show: true
+      }
+    },
+    xaxis: {
+      tickDecimals: 1
+    },
+    yaxis: {
+      tickSize: 500
+    }
+  }, {
+    height: 305,
+    tooltipText: "y + ' visitors at ' + x + '.00h'"
+  });
+
+  $("#visits-bar-chart").simplePlot(visitsChartData, {
+    series: {
+      bars: {
+        show: true,
+        barWidth: .9,
+        align: 'center'
+      }
+    },
+    xaxis: { tickDecimals: 1 },
+    yaxis: { tickSize: 500 }
+  }, {
+    height: 305, 
+    tooltipText: "y + ' visitors at ' + x + '.00h'" 
+  });
+
+  var donutChartData = [{
+    label: "Series 1",
+    data: 50
+  }, {
+    label: "Series 2",
+    data: 50
+  }, {
+    label: "Series 3",
+    data: 50
+  }];
+
+  $("#donut-chart").simplePlot(donutChartData, {
+    series: {
+      pie: {
+        show: true,
+        radius: 1,
+        innnerRadius: 0.5,
+        label: {
+          show: true,
+          radius: 3/4,
+          formatter: function(label, series) {
+            return '<div style="font-size:20px;text-align:center;padding:2px;color:white;">' +    Math.round(series.percent) + '%</div>';
+          },
+          background: {
+            opacity: 0
+          }
+        }
+      }
+    }
+  });
+})
+</script>
+
+<!-- Server statistics -->
+<section class="row-fluid">
+
+  <div class="well widget-pie-charts">
+    <h3 class="box-header">Server statistics</h3>
+    <div class="box no-border non-collapsible">
+      <div class="span2 pie-chart">
+        <div id="easy-pie-chart-1" data-percent="58">
+          58%
+        </div>
+        <div class="caption">
+          New Visits
+        </div>
+      </div>
+      
+      <div class="span2 pie-chart">
+        <div id="easy-pie-chart-2" data-percent="1">
+          0.99%
+        </div>
+        <div class="caption">
+          Bounce Rate
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- / Server statistics -->
+
+<section class="row-fluid">
+  <!-- Daily visit line chart -->
+  <div class="span8">
+    <h3 class="box-header">
+      <i class="icon-home"></i>
+      Daily visits line chart
+    </h3>
+    <div class="box">
+      <div id="visits-line-chart"></div>
+    </div>
+  </div>
+  
+  <div id="counters" class="span4">
+    <h3 class="box-header">
+      <i class="icon-signal"></i>
+      Daily statistics
+    </h3>
+    <div class="box no-border no-padding widget-statistics">
+      
+      <div class="rounded-borders">
+        <div class="counter small">
+          <span>897</span>
+        </div>
+        <div class="counter-label">
+          Visits today
+        </div>
+      </div>
+      
+      <div class="rounded-borders">
+        <div class="counter small">
+          <span>564</span>
+        </div>
+        <div class="counter-label">
+          Unique Visits
+        </div>
+      </div>    
+    </div>
+  </div>
+</section>
+
+<section class="row-fluid">
+  
+  <!-- Daily visit bar chart -->
+  <div class="span6">
+    <h3 class="box-header">
+      <i class="icon-home"></i>
+      Daily visits bar chart
+    </h3>
+    <div class="box">
+      <div id="visits-bar-chart"></div>
+    </div>
+  </div>
+  
+  <!-- Donut chart -->
+  <div class="span6">
+    <h3 class="box-header">
+      <i class="icon-home"></i>
+      Donut chart example
+    </h3>
+    <div class="box">
+      <div id="donut-chart"></div>
+    </div>
+  </div>  
+</section>
+
+<section class="row-fluid">
+  <!-- Support ticket -->
+  <div class="span6">
+    <h3 class="box-header">
+      <i class="icon-bullhorn"></i>
+      Support tickets
+    </h3>
+    <div class="box widget-support-tickets">
+      <div class="ticket">
+        <span class="label label-success">Completed</span>
+        <a href="javascript:void(0);">Server unavailable<span>[#201890]</span></a>
+        <img alt="Avatar" src="assets/images/avatar.png">
+        <span class="opened-by">
+          Opened by <a href="javascript:void(0);">First User</a><br/>
+          Jan 28, 2012 10:24
+        </span>
+      </div>
+      
+      <div class="ticket">
+	      <span class="label label-warning">Pending</span>
+	      <a href="javascript:void(0);" title="">Mobile App Problem<span>[#201797]</span></a>
+	      <img src="assets/images/avatar.png" alt="Avatar">
+	      <span class="opened-by">
+	        Opened by <a href="#">Second User</a> <br>
+	        Jan 28, 2012 10:24
+	      </span>
+	    </div>
+	
+	    <div class="ticket">
+	      <span class="label label-info">In progress</span>
+	      <a href="javascript:void(0);" title="">
+	        <i class="icon-warning-sign text-error"></i>PayPal issue<span>[#201796]</span>
+	      </a>
+	      <img src="assets/images/avatar.png" alt="Avatar">
+	      <span class="opened-by">
+	        Opened by <a href="#">Third User</a> <br>
+	        Jan 28, 2012 10:24
+	      </span>
+	    </div>
+	
+	    <div class="ticket">
+	      <span class="label label-important">Rejected</span>
+	      <a href="javascript:void(0);" title="">IE7 problem<span>[#201795]</span></a>
+	      <img src="assets/images/avatar.png" alt="Avatar">
+	      <span class="opened-by">
+	        Opened by <a href="#">Fourth User</a> <br>
+	        Jan 28, 2012 10:24
+	      </span>
+	    </div>
+	    
+	    <div class="widget-actions">
+        <a href="javascript:void(0);" class="btn btn-mini">Show more</a>	     
+	    </div>
+    </div>
+  </div>
+  
+  <!-- Last activity -->
+  <div class="span6">
+    <h3 class="box-header">
+      <i class="icon-time"></i>
+      Last activity
+    </h3>
+    <div class="box">
+      <div class="tabbable">
+        <!-- Tabs -->
+        <ul class="nav nav-tabs box-wide">
+          <li class="active">
+            <a href="#tab-comments" data-toggle="tab">Comments</a>
+          </li>
+          <li>
+            <a href="#tab-threads" data-toggle="tab">Threads</a>
+          </li>
+          <li>
+            <a href="#tab-users" data-toggle="tab">Users</a>
+          </li>
+        </ul>
+        
+        <!-- Tabs content -->
+        <div class="tab-content box-wide box-no-bottom-padding">
+          
+          <!-- Recent comments tab content -->
+          <div class="tab-pane fade in widget-comments active" id="tab-comments">
+            
+            <div class="comment">
+              <img alt="" src="assets/images/avatar.png">
+              <div class="content">
+                <span class="commented-by">
+                  <a href="javascript:void(0);">First User</a>
+                  commented on <a href="javascript:void(0);">Article Name</a>
+                </span>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                    tempor incididunt ut labore.
+                <span class="actions">
+                  <a href="javascript:void(0);"><i class="icon-pencil"></i>Edit</a>
+                  <a href="javascript:void(0);" class="comment-remove"><i class="icon-trash"></i>Remove</a>
+                  <span class="pull-right">2 hours ago</span>
+                </span>
+              </div>
+            </div>
+            
+            <div class="widget-actions">
+              <a href="javascript:void(0);" class="btn btn-mini">Show more</a>       
+            </div>
+          </div>
+          <!-- / Recent comments tab content -->
+          
+          <!-- Recent threads tab content -->
+          <div class="tab-pane fade widget-threads" id="tab-threads">
+            
+            <div class="thread">
+              <img alt="" src="assets/images/avatar.png">
+              <div class="content">
+                <span>14h</span>
+                <div>
+                  <a href="javascript:void(0);">Lorem ipsum dolor sit amet</a><br/>
+                  asked by <a href="javascript:void(0);">Second User</a> in <a href="javascript:void(0);">Forum name</a>
+                </div>
+              </div>
+            </div>
+            
+            <div class="widget-actions">
+              <a href="javascript:void(0);" class="btn btn-mini">Show more</a>
+            </div>
+          </div>
+          <!-- / Recent threads tab content -->
+          
+          <!-- Recent users activity tab content -->
+          <div class="tab-pane fade widget-users-activity" id="tab-users">
+            
+            <div class="activity">
+              <span class="pull-right">12h</span>
+              <i class="icon-ok" style="color: #9bb921"></i>
+              <img alt="" src="assets/images/avatar.png">
+              <div>
+                <a href="javascript:void(0);">First User</a> followed <a href="javascript:void(0);">Second User</a>
+              </div>
+            </div>
+            
+            <div class="widget-actions">
+              <a href="javascript:void(0);" class="btn btn-mini">Show more</a>
+            </div>
+          </div>
+          <!-- / Recent users activity tab content -->
+        </div>
+        <!-- / Tabs content -->
+      </div>
+    </div>
+  </div>  
+</section>
+@footer()

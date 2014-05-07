@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <title>SME AdminFlare - Components </title>
+    <meta content="" name="description">
+    <meta content="width=device-width" name="viewport">
+    
+    <!-- <script type="text/javascript" src="http://adminflare-130.herokuapp.com/assets/javascripts/1.3.0/modernizr-jquery.min.js"></script> -->
+    
+    <script type="text/javascript" src="@routes.Assets.at("/public", "javascripts/jquery-1.9.0.min.js")"></script>
+    
+    <script type="text/javascript" src="@routes.Assets.at("/public", "javascripts/bootstrap.min.js")"></script>
+    
+    <script type="text/javascript" src="@routes.Assets.at("/public", "javascripts/adminflare.min.js")"></script>
+    
+    <script type="text/javascript" src="@routes.Assets.at("/public", "javascripts/demo.js")"></script>
+    
+    <script type="text/javascript" src="@routes.Application.javascriptRoutes()"></script>
+    
+    <link rel="stylesheet" type="text/css" media="all" href="@routes.Assets.at("/public", "stylesheets/bootstrap.min.css")">
+    <link rel="stylesheet" type="text/css" media="all" href="@routes.Assets.at("/public", "stylesheets/adminflare.min.css")">
+    <link rel="stylesheet" type="text/css"  href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,300,600,700">
+
+    <script type="text/javascript">
+      $(document).ready(function() {
+    	  prettyPrint();
+      });
+    </script>  
+  </head>
+  
+  <body class=" fluid-layout">
+    
+    @header()
+    
+    @leftMenu()
+    
+    @container()
+  </body>
+</html>

@@ -1,0 +1,54 @@
+<nav id="left-panel" style="height: 100%; position: fixed; top: 0px; left: 0px;">
+  <div id="left-panel-content" style="overflow: hidden;">
+    <ul style="transition-property: -moz-transform; transform-origin: 0px 0px 0px; transform: translate(0px, 0px);">
+      <li class="active">
+        <a href="javascript:void(0);" onclick="jsRoutes.controllers.Application.dashboard().ajax({ success: function(data){ $('#main-page').html(data); }});">
+        <span class="icon-dashboard"></span>Dashboard
+        </a>
+      </li>
+      <li>
+        <a href="javascript:void(0)" onclick="jsRoutes.controllers.Application.javascript().ajax({ success: function(data){ $('#main-page').html(data); }});">
+        <span class="icon-cog"></span>Javascript
+        </a>
+      </li>
+      <li class="lp-dropdown">
+        <a id="extras-dropdown" class="lp-dropdown-toggle" href="#"><span class="icon-reorder"></span>Extras</a>
+        <ul class="lp-dropdown-menu" data-dropdown-owner="extras-dropdown">
+          <li>
+            <a tabindex="-1" href="#"><span class="icon-coffee"></span>Icons</a>
+          </li>
+          <li>
+            <a tabindex="-1" href="#"><span class="icon-bar-chart"></span>Charts</a>
+          </li>
+          <li>
+            <a tabindex="-1" href="#"><span class="icon-star"></span>Widgets</a>
+          </li>
+        </ul>
+      </li>
+      <li class="lp-dropdown">
+        <a id="pages-dropdown" class="lp-dropdown-toggle" href="#"><span class="icon-file-alt"></span>Pages</a>
+        <ul class="lp-dropdown-menu simple" data-dropdown-owner="pages-dropdown">
+          <li>
+            <a tabindex="-1" href="#"><i class="icon-signin"></i>&nbsp;&nbsp;Sign In</a>
+          </li>
+          <li>
+            <a tabindex="-1" href="#"><i class="icon-check"></i>&nbsp;&nbsp;Sign Up</a>
+          </li>
+          <li>
+            <a tabindex="-1" href="#"><i class="icon-envelope-alt"></i>&nbsp;&nbsp;Messages</a>
+          </li>
+          <li>
+            <a tabindex="-1" href="#"><i class="icon-leaf"></i>&nbsp;&nbsp;Stream</a>
+          </li>
+          <li>
+            <a tabindex="-1" href="#"><i class="icon-bug"></i>&nbsp;&nbsp;Error 500</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+  <div class="icon-caret-down"></div>
+  <div class="icon-caret-up"></div>
+  
+</nav>
