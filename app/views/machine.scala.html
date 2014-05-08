@@ -1,0 +1,78 @@
+<script type="text/javascript">
+  $(document).ready(function() {
+    $("body").on("click", "a.btn.createvm", function() {
+      router.controllers.Application.modal(1).ajax({
+        success: function(data) {
+          $("#createvm-modal").html(data);
+          $("#createvm-modal div.modal").modal({
+            keyboard: false,
+            backdrop: 'static'
+          });
+        }
+      });
+    });
+  });
+</script>
+
+<section class="row-fluid">
+  <!-- VM List -->
+  <div class="span4">
+    <h3 class="box-header">
+      <i class="icon-linux"></i>Virtual machine instances
+    </h3>
+    <div class="box widget-comments non-collapsible">
+      <div class="comment" style="cursor: pointer;">
+        <i class="icon-linux icon-3x" style="float: left; margin-top: 5px;"></i>
+        <i class="icon-terminal icon-3x" style="float: right;"></i>
+        <div class="content">
+          <span class="commented-by">
+            <a>172.24.4.81</a> [#slave-id]
+          </span>
+          <p>Starting ...<p>
+          <span class="actions">
+            <a href="javascript:void(0);"><i class="icon-trash"></i>Destroy</a>
+          </span>
+        </div>
+      </div>
+      
+      <div class="comment" style="cursor: pointer;">
+        <i class="icon-windows icon-3x" style="float: left; margin-top: 5px;"></i>
+        <div class="content">
+          <span class="commented-by">
+            <a>172.24.4.88</a> [#slave-id]
+          </span>
+          <p id="summary">
+            <span>+ Window server 2008</span><br>
+            <span>+ Created at May 7, 2014 10:24 AM</span>
+          </p>
+          <span class="actions">
+            <a><i class="icon-trash"></i>Destroy</a>
+          </span>
+        </div>
+      </div>
+      
+      <div class="widget-actions">
+        <a class="btn btn-mini btn-primary createvm">Create new instance</a>
+      </div>
+    </div>
+  </div>
+  <div id="createvm-modal">
+  </div>
+  <div class="span8">
+    <h3 class="box-header">
+      <i class="icon-terminal"></i>Console Output
+    </h3>
+    <div class="box non-collapsible">
+      <pre class="pre-scrollable">
+[info] play - Application started (Dev)
+[info] Compiling 1 Scala source to /home/public/sme-gui/target/scala-2.10/classes...
+[success] Compiled in 584ms
+[info] Compiling 1 Scala source to /home/public/sme-gui/target/scala-2.10/classes...
+[success] Compiled in 587ms
+[info] Compiling 1 Scala source to /home/public/sme-gui/target/scala-2.10/classes...
+[success] Compiled in 554ms
+      <i class="icon-spinner icon-spin"></i>
+      </pre>
+    </div>
+  </div>
+</section>

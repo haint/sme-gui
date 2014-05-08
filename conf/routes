@@ -4,6 +4,9 @@
 
 # Home page
 GET     /                           controllers.Application.index()
+GET     /signin                     controllers.Application.signin()
+GET     /modal/:type                controllers.Application.modal(type: Int)
+GET     /ajax/routes                controllers.Application.javascriptRoutes()
 
 # Demo page
 GET     /demo                       controllers.Demo.demo()
@@ -12,13 +15,10 @@ GET     /javascript                 controllers.Demo.javascript()
 GET     /widget                     controllers.Demo.widget()
 GET     /javascriptRoutes           controllers.Demo.javascriptRoutes()
 
-#Wizard
-GET     /wizard/:step               controllers.Wizard.step(step: Int)
-POST    /wizard/:step               controllers.Wizard.submit(step: Int)
-
 #Job monitoring
 GET    /monitor                     controllers.Console.monitor(git, number: Int, offering)
 GET    /systemout/:name             controllers.Console.printOut(name)
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
 GET     /fonts/*file                controllers.Assets.at(path="/public/fonts", file)

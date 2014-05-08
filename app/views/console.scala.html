@@ -1,6 +1,5 @@
 @(slaves : List[String])
 
-@main(Html("Console")) {
     <ul class="nav nav-tabs" id="myTab">
     @for((slave,i) <- slaves.zipWithIndex) {
       <li class="@("active".when(i == 0))">
@@ -67,4 +66,3 @@
     	  }
     	});
     </script>
-}
