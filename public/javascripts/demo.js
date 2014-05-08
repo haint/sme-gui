@@ -2,7 +2,10 @@ $(document).ready(function() {
   
   // left menu click.
 	$("#left-panel #left-panel-content ul li").on("click", function() {
+	  //clear active
 	  $("#left-panel #left-panel-content ul li").removeClass("active");
+	  $("ul.lp-dropdown-menu li").removeClass("active");
+	  
 	  $(this).addClass("active");
 	});
 	

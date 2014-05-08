@@ -2,12 +2,14 @@
   <div id="left-panel-content" style="overflow: hidden;">
     <ul style="transition-property: -moz-transform; transform-origin: 0px 0px 0px; transform: translate(0px, 0px);">
       <li class="active">
-        <a href="javascript:void(0);" onclick="jsRoutes.controllers.Application.dashboard().ajax({ success: function(data){ $('#main-page').html(data); }});">
+        <a href="javascript:void(0);" onclick="jsRoutes.controllers.Demo.dashboard().ajax({ success: function(data){ $('#main-page').html(data); }});">
+        <!-- <a href="@routes.Demo.dashboard()"> -->
         <span class="icon-dashboard"></span>Dashboard
         </a>
       </li>
       <li>
-        <a href="javascript:void(0)" onclick="jsRoutes.controllers.Application.javascript().ajax({ success: function(data){ $('#main-page').html(data); }});">
+        <a href="javascript:void(0);" onclick="jsRoutes.controllers.Demo.javascript().ajax({ success: function(data){ $('#main-page').html(data); }});">
+        <!-- <a href="@routes.Demo.javascript()"> -->
         <span class="icon-cog"></span>Javascript
         </a>
       </li>
@@ -21,7 +23,9 @@
             <a tabindex="-1" href="#"><span class="icon-bar-chart"></span>Charts</a>
           </li>
           <li>
-            <a tabindex="-1" href="#"><span class="icon-star"></span>Widgets</a>
+            <a tabindex="-1" href="javascript:void(0);" onclick="jsRoutes.controllers.Demo.widget().ajax({ success: function(data){ $('#main-page').html(data); }});">
+            <!-- <a tabindex="-1" href="@routes.Demo.widget()"> -->
+            <span class="icon-star"></span>Widgets</a>
           </li>
         </ul>
       </li>

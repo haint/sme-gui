@@ -1,0 +1,425 @@
+<script type="text/javascript">
+
+$(document).ready(function() {
+  //Collapse/Expand functionality
+  $(".box-header").each(function () {
+    var box = $(this).next();
+    // If next element is a box and hasn't .non-collapsible class
+    if (box.hasClass('box') && ! box.hasClass('non-collapsible'))
+      $(this).append('<a href="#" class="box-collapse pull-right">hide&nbsp;&nbsp;<i class="icon-caret-up"></i></a>')
+             .append('<a href="#" class="box-expand pull-right" style="display: none">show&nbsp;&nbsp;<i class="icon-caret-down"></i></a>');
+  });
+
+  $("#widget-tasks-example").afTasks({
+    completeCallback: function(elem, event) {
+      console.log("Task completed");
+    },
+    cancelCallback: function(elem, event) {
+      console.log("Task cancelled");
+    },
+    clearCallback: function(elem) {
+      console.log("Completed tasks removed")
+    }
+  });
+
+  //$("#textarea-chat-example").autosize();  
+
+  /* Stars rating widget
+  ================================================== */
+	var current_rating = 3.4;
+	
+	$('#stars-rating-example').afStarsRating({
+	  current_rating: current_rating,
+	  onSetRating: function (elem, value) {
+	    $('#your-rating-example').text(value);
+	  }
+	});
+	$('#current-rating-example').text(current_rating);
+	$('#your-rating-example').text('0');
+	
+	$('#set-rating-example').click(function(){
+	  $('#stars-rating-example').afStarsRating('setCurrentRating', 2.3);
+	  $('#current-rating-example').text('2.3');
+	});
+
+
+	/* Stream widget
+  ================================================== */
+	var events = [
+	  { type: 'user-event', message: 'User logged in.', icon: '<img src="assets/images/avatar.png" alt="">', caption: 'Moderator' },
+	  { type: 'server-error', message: 'Error 500: Syntax error in index.php at line 461.' },
+	  { type: 'server-warning', message: 'Warning: Processor load 92%.' },
+	  { type: 'server-success', message: 'Server up.' },
+	  { type: 'mailer', message: 'Newsletter has been sent at 1258 emails.' },
+	  { type: 'shop', message: 'Item "T-shirt Be Happy" has been sold for $20.' },
+	  { type: 'cron', message: 'Job "Clean DB" has been completed.' } 
+	]
+	
+	$('#stream-example').afStream({
+    event_types: {
+      'user-event': { },
+      'server-error': {
+        icon: '<i class="icon-hdd" />',
+        caption: 'System'
+      },
+      'server-warning': {
+        icon: '<i class="icon-hdd" />',
+        caption: 'System'
+      },
+      'server-success': {
+        icon: '<i class="icon-hdd" />',
+        caption: 'System'
+      },
+      'mailer': {
+        icon: '<i class="icon-envelope" />',
+        caption: 'Mailer'
+      },
+      'shop': {
+        icon: '<i class="icon-tag" />',
+        caption: 'Shop'
+      },
+      'cron': {
+        icon: '<i class="icon-time" />',
+        caption: 'Cron Daemon'
+      }
+    },
+    height: 370,
+    update_interval: 3, // seconds
+    time_update_interval: 1, // seconds
+    onUpdate: function () {
+      var event = $.extend({}, events[events.push(events.shift()) - 1]);
+      $('#stream-example').afStream('addEvent', event);
+    }
+  });
+
+});
+
+</script>
+
+<style type="text/css">
+    .status-example { line-height: 0; position:relative; top: 22px }
+
+    #stream-example {
+      margin-top: -15px !important;
+    }
+
+    #stream-example .stream-empty {
+      margin-top: 15px;
+    }
+
+    .stream-event-server-error i {
+      background: #d54848;
+      color: #fff;
+    }
+
+    .stream-event-server-warning i {
+      background: #ecad3f;
+      color: #fff;
+    }
+
+    .stream-event-server-success i {
+      background: #71c73e;
+      color: #fff;
+    }
+
+    .stream-event-mailer i {
+      background: #77b7c5;
+      color: #fff;
+    }
+
+    .stream-event-cron i {
+      background: #ddd;
+    }
+
+    .stream-event-shop i {
+      background: #7764ae;
+      color: #fff;
+    }
+  </style>
+
+<section class="row-fluid">
+  
+  <!-- Support ticket -->
+  
+  <div class="span6">
+    <h3 class="box-header">
+      <i class="icon-bullhorn"></i>
+      Support tickets
+    </h3>
+    <div class="box widget-support-tickets">
+      <div class="ticket">
+        <span class="label label-success">Completed</span>
+        <a href="javascript:void(0);">Server unavailable<span>[#290312]</span></a>
+        <img alt="" src="assets/images/avatar.png">
+        <span class="opened-by">
+          Opened by <a>HaiNT</a><br>
+          May 8, 2014 10:24
+        </span>
+      </div>
+      
+      <div class="ticket">
+        <span class="label label-warning">Pending</span>
+        <a href="javascript:void(0);">Mobile problem<span>[#290312]</span></a>
+        <img alt="" src="assets/images/avatar.png">
+        <span class="opened-by">
+          Opened by <a>HaiNT</a><br>
+          May 8, 2014 10:24
+        </span>
+      </div>
+      
+      <div class="ticket">
+        <span class="label label-info">In progress</span>
+        <a href="javascript:void(0);">Mobile problem<span>[#290312]</span></a>
+        <img alt="" src="assets/images/avatar.png">
+        <span class="opened-by">
+          Opened by <a>HaiNT</a><br>
+          May 8, 2014 10:24
+        </span>
+      </div>
+      
+      <div class="ticket">
+        <span class="label label-important">Error</span>
+        <a href="javascript:void(0);">Mobile problem<span>[#290312]</span></a>
+        <img alt="" src="assets/images/avatar.png">
+        <span class="opened-by">
+          Opened by <a>HaiNT</a><br>
+          May 8, 2014 10:24
+        </span>
+      </div>
+      
+      <div class="widget-actions">
+        <a class="btn btn-mini">Show more</a>
+      </div>
+    </div>
+  </div>
+  
+  <!-- / Support ticket -->
+  
+  <!-- Comments -->
+  <div class="span6">
+    <h3 class="box-header">
+      <i class="icon-comment-alt"></i>
+      Comments
+    </h3>
+    
+    <div class="box widget-comments">
+      
+      <div class="comment">
+        <img alt="Avatar" src="assets/images/avatar.png">
+        <div class="content">
+          <span class="commented-by">
+            <a>First User</a> commented on <a>Article Name</a>
+          </span>
+          ลองมาดูสิ่งที่รักหรือแสวงหาหรือต้องการความเจ็บปวด แต่เป็นเพราะคำสอนที่แท้จริงของ 
+           เก็บได้รับการร้องขอ
+          <span class="actions">
+            <a><i class="icon-pencil"></i>Edit</a>
+            <a class="comment-remove"><i class="icon-trash"></i>Remove</a>
+            <span class="pull-right">2 hours ago</span>
+          </span>
+        </div>
+      </div>
+      
+      <div class="widget-actions">
+        <a class="btn btn-mini">Show more</a>
+      </div>
+    </div>  
+  </div>
+  <!-- / Comments -->
+
+</section>
+
+<section class="row-fluid">
+
+  <!-- Thread -->
+  <div class="span6">
+    <h3 class="box-header">
+      <i class="icon-comments-alt"></i>
+      Threads
+    </h3>
+    <div class="box widget-threads">
+      <div class="thread">
+        <img alt="Avatar" src="assets/images/avatar.png">
+        <div class="content">
+          <span>14h</span>
+          <div>
+            <a>Ces la vie</a><br>
+            asked by <a>HaiNT</a> in <a>Forum name</a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="widget-actions">
+        <a class="btn btn-mini">Show more</a>
+      </div>       
+    </div>
+  </div>
+  <!-- Thread -->
+  
+  <!-- User activity -->
+  <div class="span6">
+    <h3 class="box-header">
+      <i class="icon-time"></i>Users activity
+    </h3>
+    <div class="box widget-users-activity">
+      <div class="activity">
+        <span class="pull-right">12h</span>
+        <i class="icon-ok" style="color: green;"></i>
+        <img alt="" src="assets/images/avatar.png">
+        <div>
+          <a>First User</a> followed <a>Second User</a> 
+        </div>
+      </div>
+      
+      <div class="widget-actions">
+        <a class="btn btn-mini">Show more</a>
+      </div>
+    </div>
+  </div>
+  <!-- / User activity -->
+</section>
+
+<section class="row-fluid">
+  <!-- Task -->
+  <div class="span6">
+    <h3 class="box-header">
+      <i class="icon-book"></i>Tasks
+    </h3>
+    
+    <div class="box widget-tasks" id="widget-tasks-example">
+      <div class="task">
+        <span class="label label-warning pull-right">High</span>
+        <div><input type="checkbox"></div>
+        <a href="#">A very important task <span>1 hour left</span></a>
+      </div>
+      
+      <div class="task">
+        <div><input type="checkbox"></div>
+        <a href="#">A regular task</a>
+      </div>
+      
+      <div class="widget-actions">
+        <a href="javascript:$('#widget-tasks-example').afTasks('clearCompletedTasks')" class="btn btn-mini">Clear completed task</a>
+        <a class="btn btn-mini">Show more</a>
+      </div>
+    </div>
+  </div>
+  <!-- / Task -->
+  
+  <!-- Statistics -->
+  <div class="span6">
+    <h3 class="box-header">
+      <i class="icon-signal"></i>
+      Statistics
+    </h3>
+    <div class="box no-border no-padding widget-statistics">
+      <div>
+        <div class="counter small">
+          <span>113</span>
+        </div>
+        <div class="counter-label">
+          Visits Today
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- / Statistics -->
+</section>
+
+<section class="row-fluid">
+  <div class="span6">
+    <!-- Chat -->
+    <h3 class="box-header">
+      <i class="icon-comments"></i>Chat
+    </h3>
+    <div class="box widget-chat">
+      <div class="message">
+	      <img alt="" src="assets/images/avatar.png">
+	      <div>
+	        <a>First User</a> says:
+	        <span class="pull-right">2 minutes ago</span>
+	        <div>
+	          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.
+	        </div>
+        </div>
+      </div>
+      
+      <div class="message right">
+        <img alt="" src="assets/images/avatar.png">
+        <div>
+        <a>First User</a> says:
+        <span class="pull-right">2 minutes ago</span>
+        <div>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.
+        </div>
+        </div>
+      </div>
+      
+      <div class="widget-actions">
+        <form class="form-inline">
+          <button class="btn btn-primary">Send</button>
+          <div>
+            <textarea rows="1" id="textarea-chat-example"></textarea>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- / Chat -->
+    
+    <!-- Star rating -->
+    <h3 class="box-header">
+      <i class="icon-star"></i>Stars rating
+    </h3>
+    <div class="box">
+      <span id="stars-rating-example"></span>&nbsp;&nbsp;&nbsp;
+      Current rating: <strong id="current-rating-example">0</strong>&nbsp;&nbsp;&nbsp;
+      Your rating: <strong id="your-rating-example">0</strong><br><br>
+      <button id="set-rating-example" class="btn btn-mini">Set current rating = 2.3</button>
+    </div>
+    <!-- / Star rating -->
+    
+  </div>
+  
+  <div class="span6">
+    
+    <!-- Message -->
+    <h3 class="box-header">
+      <i class="icon-download-alt"></i>Messages
+    </h3>
+    <div class="box widget-messages">
+      <div class="message unread">
+        <div class="action-checkbox">
+          <input type="checkbox">
+        </div>
+        <a class="from">Firs User</a>
+        <div class="date"> 18 Jan</div>
+        <a class="title">Message title 1</a>
+      </div>
+      
+      <div class="message">
+        <div class="action-checkbox">
+          <input type="checkbox">
+        </div>
+        <a class="from">Firs User</a>
+        <div class="date"> 18 Jan</div>
+        <a class="title">Message title 2</a>
+      </div>
+      
+      <div class="widget-actions">
+        <a class="btn btn-mini">Show more</a>
+      </div>
+    </div>
+    <!-- / Message -->
+    
+    <!-- Stream -->
+    <h3 class="box-header">
+      <i class="icon-reorder"></i>Stream
+    </h3>
+    <div class="box">
+      <div class="widget-stream" id="stream-example"></div>
+    </div>
+    <!-- / Stream -->
+  </div>
+</section>
+
+@footer()

@@ -4,10 +4,13 @@
 
 # Home page
 GET     /                           controllers.Application.index()
-GET     /demo                       controllers.Application.demo()
-GET     /dashboard                  controllers.Application.dashboard()
-GET     /javascript                 controllers.Application.javascript()
-GET     /javascriptRoutes           controllers.Application.javascriptRoutes()
+
+# Demo page
+GET     /demo                       controllers.Demo.demo()
+GET     /dashboard                  controllers.Demo.dashboard()
+GET     /javascript                 controllers.Demo.javascript()
+GET     /widget                     controllers.Demo.widget()
+GET     /javascriptRoutes           controllers.Demo.javascriptRoutes()
 
 #Wizard
 GET     /wizard/:step               controllers.Wizard.step(step: Int)
