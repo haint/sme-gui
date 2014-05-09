@@ -1,9 +1,15 @@
 package controllers;
 
-import play.Routes;
+import java.util.Date;
+
+import play.libs.F.Callback;
+import play.libs.F.Callback0;
 import play.mvc.Controller;
 import play.mvc.Result;
-import views.html.*;
+import play.mvc.WebSocket;
+import views.html.main;
+import views.html.signin;
+import views.html.socket;
 
 
 public class Application extends Controller {
@@ -16,19 +22,29 @@ public class Application extends Controller {
     return ok(signin.render());
   }
   
-  public static Result modal(int type) {
-    switch (type) {
-    //create new vm
-    case 1:
-      return ok(createMachineModal.render());
-    default:
-      return status(404).as("Unsupported modal type " + type);
-    }
+  public static Result testSoc() {
+    return ok(socket.render());
   }
   
-  public static Result javascriptRoutes() {
-    response().setContentType("text/javascript");
-    return ok(Routes.javascriptRouter("router", 
-        routes.javascript.Application.modal()));
+  public static WebSocket<String> socket() {
+    return new WebSocket<String>() {
+
+      @Override
+      public void onReady(play.mvc.WebSocket.In<String> in, play.mvc.WebSocket.Out<String> out) {
+        in.onMessage(new Callback<String>() {
+          @Override
+          public void invoke(String event) throws Throwable {
+            System.out.println(event);
+          }
+        });
+        
+        in.onClose(new Callback0() {
+          @Override
+          public void invoke() throws Throwable {
+            System.out.println("Disconnected");
+          }
+        });
+      }
+    };
   }
 }

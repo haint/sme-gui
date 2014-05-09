@@ -1,0 +1,76 @@
+@(terminal : Boolean = true, destroy : Boolean = true)
+<script type="text/javascript">
+  $(document).ready(function() {
+    $("body").on("click", "a.btn.createvm", function() {
+      vmRouter.controllers.vm.VirtualMachine.create().ajax({
+        success: function(data) {
+          $("#createvm-modal").html(data);
+          $("#createvm-modal div.modal").modal({
+            keyboard: false,
+            backdrop: 'static'
+          });
+        }
+      });
+    });
+
+    @if(terminal) {
+      $("#vm-list .comment").on("click", function() {
+        var terminal = $(this).parent().find(".icon-terminal");
+        if ($(terminal).length == 0) terminal = $('<i class="icon-terminal icon-3x" style="float: right;"></i>');
+        $(terminal).insertBefore($(this).find(".content"));            
+      });
+    }
+
+    $("#vm-list .vm-ip,.vm-destroy").on("click", function(e) {
+      e.stopPropagation();
+    });
+
+    $('#vm-list .vm-ip').clickover({
+      placement: 'bottom',
+      onShown : function() {
+
+        var obj = $(this)[0];
+        var options = obj.options;
+        
+        vmRouter.controllers.vm.VirtualMachine.detail("id").ajax({
+          success: function(data) {
+            options.content = data;
+            obj.show();
+          }
+        });
+      }
+    });
+  });
+</script>
+
+<section class="row-fluid">
+  <!-- VM List -->
+  <div class="span4">
+    @vmlist(terminal, destroy)
+  </div>
+  <!-- / VM list -->
+  
+  <div id="createvm-modal">
+  </div>
+  
+  <!-- VM Console -->
+  <div class="span8">
+    <h3 class="box-header">
+      <i class="icon-terminal"></i>Console Output
+    </h3>
+    <div class="box non-collapsible">
+      <pre id="" class="pre-scrollable">
+[info] play - Application started (Dev)
+[info] Compiling 1 Scala source to /home/public/sme-gui/target/scala-2.10/classes...
+[success] Compiled in 584ms
+[info] Compiling 1 Scala source to /home/public/sme-gui/target/scala-2.10/classes...
+[success] Compiled in 587ms
+[info] Compiling 1 Scala source to /home/public/sme-gui/target/scala-2.10/classes...
+[success] Compiled in 554ms
+      <i class="icon-spinner icon-spin"></i>
+      </pre>
+    </div>
+  </div>
+  <!-- / VM Console -->
+</section>
+@footer()

@@ -10,3 +10,4 @@ target
 tmp
 dist
 .cache
+bin

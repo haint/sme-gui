@@ -15,7 +15,7 @@
     
     <script type="text/javascript" src="@routes.Assets.at("/public", "javascripts/demo.js")"></script>
     
-    <script type="text/javascript" src="@routes.Application.javascriptRoutes()"></script>
+    <script type="text/javascript" src="@controllers.vm.routes.VirtualMachine.ajax()"></script>
     
     <link rel="stylesheet" type="text/css" media="all" href="@routes.Assets.at("/public", "stylesheets/bootstrap.min.css")">
     <link rel="stylesheet" type="text/css" media="all" href="@routes.Assets.at("/public", "stylesheets/adminflare.min.css")">
@@ -35,7 +35,8 @@
     @leftMenu()
         
     <section id="main-page" class="container">
-    @machine()
+    @vm.machine()
     </section>
+    <div class="notifications top-right"></div>
   </body>
 </html>
