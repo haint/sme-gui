@@ -1,0 +1,47 @@
+@(name: String = "", os : String = "linux")
+<div id="@name" class="comment" style="cursor: pointer;">
+    <i class="vm icon-@os icon-3x" style="float: left; margin-top: 5px;"></i>
+    <div class="content">
+      <span class="commented-by">
+        <a class="vm-ip" href="javascript:void(0);"
+          data-content="&lt;i class='icon-spinner icon-spin'&gt;&lt;/i&gt;" data-html="true">
+          @name
+        </a> [#slave-id]
+      </span>
+      <p><i class="icon-spinner icon-spin"></i> Starting...<p>
+      <span class="actions">
+        <a class="vm-destroy" href="javascript:void(0);"><i class="icon-trash"></i>Destroy</a>
+      </span>
+    </div>
+ </div>
+ <script type="text/javascript">
+
+ var WS = window['MozWebSocket'] ? MozWebSocket : WebSocket;
+ var socket = new WS("@controllers.vm.routes.VirtualMachine.console(name).webSocketURL(request)");
+ socket.onmessage = function(event) {
+  var code = $("#vm-console-output .@name code").get(0);
+  $(code).append(event.data).append("\n");
+  var pre = $(code).parent();
+  
+  if (pre.scrollTop() + 400 >= $(code).height()) {
+    pre.scrollTop($(code).height());
+  } else
+  console.log(pre.scrollTop() + "/" + $(code).height());
+ }
+ 
+ $('#vm-list #@name .vm-ip').clickover({
+      placement: 'bottom',
+      onShown : function() {
+
+        var obj = $(this)[0];
+        var options = obj.options;
+        
+        vmRouter.controllers.vm.VirtualMachine.detail("id").ajax({
+          success: function(data) {
+            options.content = data;
+            obj.show();
+          }
+        });
+      }
+    });
+ </script>

@@ -14,10 +14,14 @@
     });
 
     @if(terminal) {
-      $("#vm-list .comment").on("click", function() {
+      $("body").on("click", "#vm-list .comment", function() {
         var terminal = $(this).parent().find(".icon-terminal");
         if ($(terminal).length == 0) terminal = $('<i class="icon-terminal icon-3x" style="float: right;"></i>');
-        $(terminal).insertBefore($(this).find(".content"));            
+        $(terminal).insertBefore($(this).find(".content"));
+        
+        var id = $(this).attr("id");
+        $("#vm-console-output pre").hide();
+        $("#vm-console-output ." + id).show();            
       });
     }
 
@@ -25,21 +29,6 @@
       e.stopPropagation();
     });
 
-    $('#vm-list .vm-ip').clickover({
-      placement: 'bottom',
-      onShown : function() {
-
-        var obj = $(this)[0];
-        var options = obj.options;
-        
-        vmRouter.controllers.vm.VirtualMachine.detail("id").ajax({
-          success: function(data) {
-            options.content = data;
-            obj.show();
-          }
-        });
-      }
-    });
   });
 </script>
 
@@ -58,17 +47,10 @@
     <h3 class="box-header">
       <i class="icon-terminal"></i>Console Output
     </h3>
-    <div class="box non-collapsible">
-      <pre id="" class="pre-scrollable">
-[info] play - Application started (Dev)
-[info] Compiling 1 Scala source to /home/public/sme-gui/target/scala-2.10/classes...
-[success] Compiled in 584ms
-[info] Compiling 1 Scala source to /home/public/sme-gui/target/scala-2.10/classes...
-[success] Compiled in 587ms
-[info] Compiling 1 Scala source to /home/public/sme-gui/target/scala-2.10/classes...
-[success] Compiled in 554ms
+    <div id="vm-console-output" class="box non-collapsible">
+      @**<pre class="" class="pre-scrollable">
       <i class="icon-spinner icon-spin"></i>
-      </pre>
+      </pre>**@
     </div>
   </div>
   <!-- / VM Console -->

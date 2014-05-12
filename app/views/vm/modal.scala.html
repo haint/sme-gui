@@ -1,4 +1,6 @@
+
 <script type="text/javascript">
+  
   $(document).ready(function() {
     $(".radio-custom i,span").on("click", function() {
       var checker;
@@ -28,12 +30,29 @@
 
     $("#vm-setup-wizard").on("finished", function() {
       $("#create-vm-modal").modal("hide");
-      $('.top-right').notify({
-        message: {
-          text: 'You have submitted create new vm(s) job.'
-        },
-        type: 'adminflare'
-      }).show()
+
+      //ajax submit form
+      vmRouter.controllers.vm.VirtualMachine.doCreate().ajax({
+        data: $("#vm-setup form").serialize(),
+        dataType: "json",
+        success: function(data) {
+          $('.top-right').notify({
+            message: {
+              text: 'You have submitted create new vm(s) job.'
+            },
+            type: 'adminflare'
+          }).show();
+
+          $(data.console).each(function(i, self) {
+            $(self).appendTo("#vm-console-output");
+          });
+
+          $(data.html).each(function(i, self) {
+            $(self).insertBefore("#vm-list .widget-actions");
+          });
+          
+        }
+      });
     });
   });
 </script>
@@ -43,7 +62,7 @@
     <h3><i class="icon-plus-sign-alt"></i> Create new instance</h3>
   </div>
   
-  <div class="modal-body" style="min-height: 300px;">
+  <div id="vm-setup" class="modal-body" style="min-height: 300px;">
     <div id="vm-setup-wizard" class="wizard">
       <ul class="steps">
           <li data-target="#step1" class="active">
@@ -72,6 +91,7 @@
           <label class="control-label">OS</label>
 	        <div class="controls">
 	         <div id="osname" class="select btn-group" data-size="auto">
+	          <input name="osname" type="hidden" value="ubuntu">
             <button data-toggle="dropdown" class="btn dropdown-toggle">
               <span class="dropdown-label" style="width: 120px;">Ubuntu 12.04</span>
               <span class="caret"></span>
@@ -88,11 +108,11 @@
 	        <label class="control-label">Type</label>
 	        <div class="controls ostype">
 	          <label class="radio radio-custom">
-	            <input type="radio" name="ostype" checked="checked" value="desktop">
+	            <input name="ostype" type="radio" name="ostype" checked="checked" value="desktop">
 	            <i class="radio checked"></i><span>Desktop</span>
 	          </label>
 	          <label class="radio radio-custom">
-	            <input type="radio" name="ostype" value="server">
+	            <input name="ostype" type="radio" name="ostype" value="server">
 	            <i class="radio"></i><span>Server</span>
 	          </label>        
 	        </div>
@@ -101,7 +121,7 @@
 	      <div class="control-group">
 	        <label class="control-label">Number</label>
 	        <div id="vmnumber" class="controls spinner">
-	          <input type="text" class="input-mini spinner-input" maxlength="3">
+	          <input name="number" type="text" class="input-mini spinner-input" maxlength="3">
 	          <div class="spinner-buttons  btn-group btn-group-vertical">
 	            <button class="btn spinner-up">
 	            <i class="icon-chevron-up"></i>

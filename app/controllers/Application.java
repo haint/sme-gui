@@ -1,15 +1,15 @@
 package controllers;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import play.libs.F.Callback;
 import play.libs.F.Callback0;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.WebSocket;
-import views.html.main;
-import views.html.signin;
-import views.html.socket;
+import views.html.*;
 
 
 public class Application extends Controller {
@@ -26,24 +26,14 @@ public class Application extends Controller {
     return ok(socket.render());
   }
   
+  private static List<WebSocket.Out<String>> holder = new ArrayList<WebSocket.Out<String>>();
+  
   public static WebSocket<String> socket() {
     return new WebSocket<String>() {
 
       @Override
-      public void onReady(play.mvc.WebSocket.In<String> in, play.mvc.WebSocket.Out<String> out) {
-        in.onMessage(new Callback<String>() {
-          @Override
-          public void invoke(String event) throws Throwable {
-            System.out.println(event);
-          }
-        });
+      public void onReady(final play.mvc.WebSocket.In<String> in, final play.mvc.WebSocket.Out<String> out) {
         
-        in.onClose(new Callback0() {
-          @Override
-          public void invoke() throws Throwable {
-            System.out.println("Disconnected");
-          }
-        });
       }
     };
   }

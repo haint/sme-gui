@@ -5,18 +5,25 @@
 
     <script type="text/javascript">
 $(document).ready(function() {
+
   var WS = window['MozWebSocket'] ? MozWebSocket : WebSocket;
   var socket = new WS("@routes.Application.socket.webSocketURL(request)");
-
-  socket.onopen = function() {
-    socket.send("ok");
-  };
   
-  socket.onmessage = function(event) {
-    console.log(event);
-  };
+  $(".start").on("click", function() {
+
+    console.log(socket.readyState);
+      socket.send("start");
+    
+    socket.onmessage = function(event) {
+      console.log(event);
+    };    
+  });
   
   //setInterval(send, 1000);
+
+  $(".stop").on("click", function() {
+      socket.close();
+  });
 });
     
 </script>
@@ -24,6 +31,8 @@ $(document).ready(function() {
   </head>
   
   <body class=" fluid-layout">
+    <button class="start">start</button>
+    <button class="stop">stop</button>
   </body>
   
 </html>

@@ -12,8 +12,10 @@ GET     /socket                     controllers.Application.socket()
 #VM
 GET     /vm                         controllers.vm.VirtualMachine.list()
 GET     /vm/new                     controllers.vm.VirtualMachine.create()
+POST    /vm/new                     controllers.vm.VirtualMachine.doCreate()
 GET     /vm/ajax                    controllers.vm.VirtualMachine.ajax()
 GET     /vm/detail/:id              controllers.vm.VirtualMachine.detail(id)
+GET     /vm/console/:name           controllers.vm.VirtualMachine.console(name)
 
 # Demo page
 GET     /demo                       controllers.Demo.demo()
@@ -29,3 +31,4 @@ GET    /systemout/:name             controllers.Console.printOut(name)
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
 GET     /fonts/*file                controllers.Assets.at(path="/public/fonts", file)
+GET     /images/*file               controllers.Assets.at(path="/public/images", file)
