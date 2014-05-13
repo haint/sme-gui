@@ -6,19 +6,16 @@
 GET     /                           controllers.Application.index()
 GET     /signin                     controllers.Application.signin()
 
-GET     /test                       controllers.Application.testSoc()
-GET     /socket                     controllers.Application.socket()
-
 #VM
-GET     /vm                         controllers.vm.VirtualMachine.list()
-GET     /vm/new                     controllers.vm.VirtualMachine.create()
-POST    /vm/new                     controllers.vm.VirtualMachine.doCreate()
-GET     /vm/destroy/:name           controllers.vm.VirtualMachine.destroy(name)
-GET     /vm/ajax                    controllers.vm.VirtualMachine.ajax()
-GET     /vm/detail/:id              controllers.vm.VirtualMachine.detail(id)
-GET     /vm/console/:name           controllers.vm.VirtualMachine.console(name)
-GET     /vm/status/:name            controllers.vm.VirtualMachine.status(name)
-GET     /vm/log/:name               controllers.vm.VirtualMachine.log(name)
+GET     /vm                         controllers.vm.VMController.list()
+GET     /vm/new                     controllers.vm.VMController.create()
+POST    /vm/new                     controllers.vm.VMController.doCreate()
+GET     /vm/destroy/:name           controllers.vm.VMController.destroy(name)
+GET     /vm/ajax                    controllers.vm.VMController.ajax()
+GET     /vm/detail/:id              controllers.vm.VMController.detail(id)
+GET     /vm/console/:name           controllers.vm.VMController.console(name)
+GET     /vm/status/:name            controllers.vm.VMController.status(name)
+GET     /vm/log/:name               controllers.vm.VMController.log(name)
 
 # Demo page
 GET     /demo                       controllers.Demo.demo()

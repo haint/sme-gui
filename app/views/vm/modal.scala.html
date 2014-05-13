@@ -32,7 +32,7 @@
       $("#create-vm-modal").modal("hide");
 
       //ajax submit form
-      vmRouter.controllers.vm.VirtualMachine.doCreate().ajax({
+      vmRouter.controllers.vm.VMController.doCreate().ajax({
         data: $("#vm-setup form").serialize(),
         dataType: "json",
         success: function(data) {
@@ -207,19 +207,19 @@
           <label class="control-label">VM Offering</label>
           <div class="controls">
             <label class="radio radio-custom">
-              <input type="radio" name="vmoffering" checked="checked" value="small">
+              <input type="radio" name="vmoffering" checked="checked" value="Small">
               <i class="radio checked"></i><span>Small (CPU: 500Mhz RAM: 512Mb)</span>
             </label>
             <label class="radio radio-custom">
-              <input type="radio" name="vmoffering" value="medium">
+              <input type="radio" name="vmoffering" value="Medium">
               <i class="radio"></i><span>Medium (CPU: 1000Mhz RAM: 1G)</span>
             </label>
             <label class="radio radio-custom">
-              <input type="radio" name="vmoffering" value="large">
+              <input type="radio" name="vmoffering" value="Large">
               <i class="radio"></i><span>Large (CPU: 1000Mhz RAM: 2G)</span>
             </label>
             <label class="radio radio-custom">
-              <input type="radio" name="vmoffering" value="supper" disabled="disabled">
+              <input type="radio" name="vmoffering" value="Supper" disabled="disabled">
               <i class="radio disabled"></i><span>Supper (CPU: 2x1000Mhz RAM: 4G)</span>
             </label>        
           </div>

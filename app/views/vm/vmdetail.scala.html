@@ -1,8 +1,11 @@
-@(status: String, ip: String)
-@if(status == "Running") {
+@(status: String, ip: String, vmid: String, cpu : String, memory: String)
+@if(status != "Staring") {
 <p>
+  <span>+ VM Id: @vmid</span><br>
   <span>+ Status: @status</span><br>
-  <span>+ Public ip: @ip</span><br>
+  <span>+ Public Ip: @ip</span><br>
+  <span>+ CPU: @cpu</span><br>
+  <span>+ Memory: @memory</span><br>
 </p>
 } else {
   <i class='icon-spinner icon-spin'></i>

@@ -2,7 +2,7 @@
 <script type="text/javascript">
   $(document).ready(function() {
     $("body").on("click", "a.btn.createvm", function() {
-      vmRouter.controllers.vm.VirtualMachine.create().ajax({
+      vmRouter.controllers.vm.VMController.create().ajax({
         success: function(data) {
           $("#createvm-modal").html(data);
           $("#createvm-modal div.modal").modal({
@@ -24,7 +24,7 @@
         var log = $("#vm-console-output ." + id).get(0);
         if (log) $(log).show();
         else {
-          vmRouter.controllers.vm.VirtualMachine.log(id).ajax({
+          vmRouter.controllers.vm.VMController.log(id).ajax({
             success: function(data) {
               $("#vm-console-output").append($(data));
               $("#vm-console-output ." + id).show();
@@ -38,7 +38,7 @@
       var id = $(this).attr("data-id");
       bootbox.confirm("Are you sure to destroy " + id + " ?", function (result) {
         if (result) {
-          vmRouter.controllers.vm.VirtualMachine.destroy(id).ajax({
+          vmRouter.controllers.vm.VMController.destroy(id).ajax({
             success: function(data) {
               $("#" + id).remove();
               $("pre." + id).remove();
@@ -49,7 +49,7 @@
       e.stopPropagation();
     });
 
-    vmRouter.controllers.vm.VirtualMachine.list().ajax({
+    vmRouter.controllers.vm.VMController.list().ajax({
       success: function(data) {
         $("#vm-list").html(data);
       }

@@ -15,7 +15,7 @@
     
     <script type="text/javascript" src="@routes.Assets.at("/public", "javascripts/demo.js")"></script>
     
-    <script type="text/javascript" src="@controllers.vm.routes.VirtualMachine.ajax()"></script>
+    <script type="text/javascript" src="@controllers.vm.routes.VMController.ajax()"></script>
     
     <link rel="stylesheet" type="text/css" media="all" href="@routes.Assets.at("/public", "stylesheets/bootstrap.min.css")">
     <link rel="stylesheet" type="text/css" media="all" href="@routes.Assets.at("/public", "stylesheets/adminflare.min.css")">
@@ -34,20 +34,20 @@
     
     @leftMenu()
         
-    <section id="vm-main-page" class="container" style="display: block;">
+    <section id="vm-main-page" class="main container" style="display: block;">
     @vm.machine()
     </section>
     
-    <section id="project-main-page" class="container" style="display: none;">
-      
-    </section>
-    
-    <section id="selenium-main-page" class="container" style="display: none;">
+    <section id="project-main-page" class="main container" style="display: none;">
     
     </section>
     
-    <section id="performace-main-page" class="container" style="display: none;">
-      
+    <section id="selenium-main-page" class="main container" style="display: none;">
+    @job.jobs("selenium")
+    </section>
+    
+    <section id="performace-main-page" class="main container" style="display: none;">
+    @job.jobs("performance")  
     </section>
     <div class="notifications top-right"></div>
   </body>

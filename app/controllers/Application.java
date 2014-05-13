@@ -21,20 +21,4 @@ public class Application extends Controller {
   public static Result signin() {
     return ok(signin.render());
   }
-  
-  public static Result testSoc() {
-    return ok(socket.render());
-  }
-  
-  private static List<WebSocket.Out<String>> holder = new ArrayList<WebSocket.Out<String>>();
-  
-  public static WebSocket<String> socket() {
-    return new WebSocket<String>() {
-
-      @Override
-      public void onReady(final play.mvc.WebSocket.In<String> in, final play.mvc.WebSocket.Out<String> out) {
-        
-      }
-    };
-  }
 }
