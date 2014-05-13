@@ -1,8 +1,11 @@
-@(terminal : Boolean = true, destroy : Boolean = true)
+@(terminal : Boolean = true, destroy : Boolean = true, list : Html)
 <h3 class="box-header">
-  <i class="icon-linux"></i>Virtual machine instances (2/10)
+  <i class="icon-linux"></i>Virtual machine instances
 </h3>
 <div id="vm-list" class="box widget-comments non-collapsible">
+  
+  @list
+
   @**<div class="comment" style="cursor: pointer;">
     <i class="vm icon-linux icon-3x" style="float: left; margin-top: 5px;"></i>
     <div class="content">

@@ -13,9 +13,12 @@ GET     /socket                     controllers.Application.socket()
 GET     /vm                         controllers.vm.VirtualMachine.list()
 GET     /vm/new                     controllers.vm.VirtualMachine.create()
 POST    /vm/new                     controllers.vm.VirtualMachine.doCreate()
+GET     /vm/destroy/:name           controllers.vm.VirtualMachine.destroy(name)
 GET     /vm/ajax                    controllers.vm.VirtualMachine.ajax()
 GET     /vm/detail/:id              controllers.vm.VirtualMachine.detail(id)
 GET     /vm/console/:name           controllers.vm.VirtualMachine.console(name)
+GET     /vm/status/:name            controllers.vm.VirtualMachine.status(name)
+GET     /vm/log/:name               controllers.vm.VirtualMachine.log(name)
 
 # Demo page
 GET     /demo                       controllers.Demo.demo()

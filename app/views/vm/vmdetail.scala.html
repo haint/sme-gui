@@ -1,4 +1,9 @@
+@(status: String, ip: String)
+@if(status == "Running") {
 <p>
-  <span>+ Status: Running</span><br>
-  <span>+ Public ip: 172.27.4.88</span><br>
+  <span>+ Status: @status</span><br>
+  <span>+ Public ip: @ip</span><br>
 </p>
+} else {
+  <i class='icon-spinner icon-spin'></i>
+}
