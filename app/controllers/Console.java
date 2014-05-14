@@ -3,26 +3,7 @@
  */
 package controllers;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
-
-import org.apache.cloudstack.api.ApiConstants.VMDetails;
-import org.sme.tools.cloudstack.AsyncJobAPI;
-import org.sme.tools.cloudstack.VirtualMachineAPI;
-import org.sme.tools.cloudstack.model.Job;
-import org.sme.tools.cloudstack.model.VirtualMachine;
-import org.sme.tools.jenkins.JenkinsMavenJob;
-import org.sme.tools.jenkins.JenkinsMaster;
-import org.sme.tools.knife.Knife;
-import org.sme.tools.ssh.SSHClient;
-
 import play.mvc.Controller;
-import play.mvc.Result;
-import views.html.console;
 
 /**
  * @author <a href="mailto:haithanh0809@gmail.com">Nguyen Thanh Hai</a>
@@ -31,7 +12,7 @@ import views.html.console;
  */
 public class Console extends Controller {
 
-  final static Map<String, BlockingQueue<String>> QueueHolder = new HashMap<String, BlockingQueue<String>>();
+ /* final static Map<String, BlockingQueue<String>> QueueHolder = new HashMap<String, BlockingQueue<String>>();
 
   public static Result monitor(String git, final int number, final String offering) throws Exception {
     final List<String> slaves = new ArrayList<String>();
@@ -170,5 +151,5 @@ public class Console extends Controller {
         }
       }
     }
-  }
+  }*/
 }

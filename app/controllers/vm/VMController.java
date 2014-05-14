@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
@@ -39,6 +40,7 @@ import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.WriteConcern;
 
+import views.html.main;
 import views.html.vm.*;
 
 /**
@@ -79,7 +81,7 @@ public class VMController extends Controller {
     
     for (int i = 0; i < number; i++) {
 
-      String name = "slave-" +System.currentTimeMillis()+ "-" + i;
+      String name = "slave-" + new Random().nextInt(Integer.MAX_VALUE);
 
       Date date = new Date(System.currentTimeMillis());
       obj.put("name", name);
@@ -100,7 +102,7 @@ public class VMController extends Controller {
       RunJob runJob = new RunJob(name, ostype, offering);
       runJob.start();
 
-      html.add(vm.render(true, name, "linux", "Starting", summary).toString());
+      html.add(vm.render(false, true, name, "linux", "Starting", summary).toString());
       console.add("<pre class='"+  name +" pre-scrollable' style='display: none;'><code></code><i class='icon-spinner icon-spin'></i></pre>");
     }
     return ok(json);
@@ -110,7 +112,7 @@ public class VMController extends Controller {
     return ok(modal.render());
   }
   
-  public static Result list() {
+  public static Result list(Boolean fure) {
     DBCollection collection = DBFactory.getDatabase().getCollection("vm");
     DBCursor cursor = collection.find();
     scala.collection.mutable.StringBuilder sb = new scala.collection.mutable.StringBuilder();
@@ -119,9 +121,9 @@ public class VMController extends Controller {
       String name = (String)obj.get("name");
       String status = (String)obj.get("status");
       String summary = (String)obj.get("summary");
-      sb.append(vm.render(false, name, "linux", status, new Html(new StringBuilder(summary))));
+      sb.append(vm.render(fure, false, name, "linux", status, new Html(new StringBuilder(summary))));
     }
-    return ok(vmlist.render(true, true, new Html(sb)));
+    return ok(vmlist.render(fure, new Html(sb)));
   }
   
   public static Result detail(String id) {
@@ -255,8 +257,12 @@ public class VMController extends Controller {
   public static Result status(final String  name) {
     DBCollection collection = DBFactory.getDatabase().getCollection("vm");
     DBCursor cursor = collection.find(new BasicDBObject("name", name));
-    DBObject obj = cursor.next();
-    return ok((String)obj.get("status"));
+    if (cursor.hasNext()) {
+      DBObject obj = cursor.next();
+      return ok((String)obj.get("status"));
+    } else {
+      return ok("Destroying or not available");
+    }
   }
   
   public static WebSocket<String> console(final String name) {

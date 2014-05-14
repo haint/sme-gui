@@ -2,6 +2,8 @@
 <script type="text/javascript">
   
   $(document).ready(function() {
+
+    //workaround to click custom radio
     $(".radio-custom i,span").on("click", function() {
       var checker;
       if ($(this).prop("tagName").toUpperCase() == "SPAN") {
@@ -18,16 +20,20 @@
       }
     });
 
+    //retricted spinner 
     $(".btn.spinner-up,.btn.spinner-down").on("click", function(e) {
       e.preventDefault();
     });
 
+    //spinner configuration
     $("#vmnumber").spinner({
       min: 1,
       max: 3,
       value: 1
     });
 
+
+    //finish create new instance(s)
     $("#vm-setup-wizard").on("finished", function() {
       $("#create-vm-modal").modal("hide");
 
@@ -246,6 +252,6 @@
   </div>
   
   <div class="modal-footer">
-    <a href="#" class="btn btn-red" data-dismiss="modal">Close</a>
+    <a href="javascript:void(0);" class="btn btn-red" data-dismiss="modal">Close</a>
   </div>
 </div>

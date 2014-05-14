@@ -7,7 +7,7 @@ GET     /                           controllers.Application.index()
 GET     /signin                     controllers.Application.signin()
 
 #VM
-GET     /vm                         controllers.vm.VMController.list()
+GET     /vm                         controllers.vm.VMController.list(fure: java.lang.Boolean)
 GET     /vm/new                     controllers.vm.VMController.create()
 POST    /vm/new                     controllers.vm.VMController.doCreate()
 GET     /vm/destroy/:name           controllers.vm.VMController.destroy(name)
@@ -17,16 +17,17 @@ GET     /vm/console/:name           controllers.vm.VMController.console(name)
 GET     /vm/status/:name            controllers.vm.VMController.status(name)
 GET     /vm/log/:name               controllers.vm.VMController.log(name)
 
+#Job
+GET     /job                        controllers.job.JobController.list(jobType)
+GET     /job/create:jobType         controllers.job.JobController.create(jobType)
+GET     /job/ajax                   controllers.job.JobController.ajax()
+
 # Demo page
 GET     /demo                       controllers.Demo.demo()
 GET     /dashboard                  controllers.Demo.dashboard()
 GET     /javascript                 controllers.Demo.javascript()
 GET     /widget                     controllers.Demo.widget()
 GET     /javascriptRoutes           controllers.Demo.javascriptRoutes()
-
-#Job monitoring
-GET    /monitor                     controllers.Console.monitor(git, number: Int, offering)
-GET    /systemout/:name             controllers.Console.printOut(name)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

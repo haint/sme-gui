@@ -17,6 +17,8 @@
     
     <script type="text/javascript" src="@controllers.vm.routes.VMController.ajax()"></script>
     
+    <script type="text/javascript" src="@controllers.job.routes.JobController.ajax()"></script>
+    
     <link rel="stylesheet" type="text/css" media="all" href="@routes.Assets.at("/public", "stylesheets/bootstrap.min.css")">
     <link rel="stylesheet" type="text/css" media="all" href="@routes.Assets.at("/public", "stylesheets/adminflare.min.css")">
     <link rel="stylesheet" type="text/css"  href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,300,600,700">
@@ -38,15 +40,11 @@
     @vm.machine()
     </section>
     
-    <section id="project-main-page" class="main container" style="display: none;">
-    
-    </section>
-    
     <section id="selenium-main-page" class="main container" style="display: none;">
     @job.jobs("selenium")
     </section>
     
-    <section id="performace-main-page" class="main container" style="display: none;">
+    <section id="performance-main-page" class="main container" style="display: none;">
     @job.jobs("performance")  
     </section>
     <div class="notifications top-right"></div>
