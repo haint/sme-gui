@@ -2,21 +2,73 @@
 <script type="text/javascript">
 $(document).ready(function() {
 
+  //show report
+  $(document).on("click", ".@jobType .btn-report", function(){
+    var screenWidth = screen.width;
+    var screenHeight = screen.height;
+    var top = screenWidth/2 - 100;
+    var left = screenHeight/2 - 200;
+    
+    var target = $(this).attr("data-target");
+    
+    @if(jobType == "selenium"){
+      var url = "http://172.27.4.77:8080/job/"+target+"/ws/ui-testsuite/target/surefire-reports/emailable-report.html";
+    }else {
+      var url = "http://172.27.4.77:8080/job/"+target+"/ws/target/LMS.html";
+    }
+    
+    window.open(url,'@jobType Report','width=900,height=600,toolbar=yes,scrollbars=yes,top=' + top + ',left=' + left + '');
+  });
+
   //show job console
-  $(document).on("click", ".@jobType-btn-console", function() {
+  $(document).on("click", ".@jobType .btn-console", function() {
     $("table.@jobType").hide();
-    $("pre.@jobType-console,ul.@jobType").show();
+    
+    var target = $(this).attr("data-target");
+    
+    $("ul.@jobType li.active").text(target);
+    
+    $("pre." + target + "-console,ul.@jobType").show();
+  });
+  
+  //run job
+  $(document).on("click", ".@jobType .btn-run", function() {
+    var target = $(this).attr("data-target");
+  });
+  
+  //remove job
+  $(document).on("click", ".@jobType .btn-remove", function() {
+    var target = $(this).attr("data-target");
+    bootbox.confirm("Are you sure to remove " + target + " ?", function (result) {
+      if (result) {
+        jobRouter.controllers.job.JobController.remove(target).ajax({
+          success: function(data) {
+            $('.top-right').notify({
+              message: {
+                text: 'You have removed a @jobType ' + target + '.' 
+              },
+              type: 'adminflare'
+            }).show();
+            
+            $("#"+target).remove();
+            $("." + target +"-console").remove();
+          }
+        });      
+      }
+    });
   });
   
   //show job list
   $(document).on("click", "ul.@jobType a", function() {
-    $("pre.@jobType-console,ul.@jobType").hide();
+    $(".@jobType-console pre,ul.@jobType").hide();
     $("table.@jobType").show();
   });
   
-  //show create job page
-  $(document).on("click", ".@jobType-btn-create-new", function() {
-    jobRouter.controllers.job.JobController.create("@jobType").ajax({
+  //show create job
+  $(document).on("click", ".@jobType-btn-create-new,.@jobType .btn-job-edit", function() {
+    var target = $(this).attr("data-target");
+    if (!target) target = "";
+    jobRouter.controllers.job.JobController.create("@jobType", target).ajax({
       success : function(data) {
         $("#create-@jobType-modal").html(data);
           $("#create-@jobType-modal div.modal").modal({
@@ -29,8 +81,13 @@ $(document).ready(function() {
   
   //fetch job list
   jobRouter.controllers.job.JobController.list("@jobType").ajax({
+    dataType: "json",
     success: function(data) {
-      $(data).insertAfter($("table.@jobType tr"));
+      $(data).each(function(i, sel) {
+        $(sel.html).insertAfter($("table.@jobType tr:first"));
+        $(sel.log).appendTo($(".@jobType-console"));
+      });
+      @**$(data).insertAfter($("table.@jobType tr"));**@
     }  
   });
 });
@@ -48,6 +105,7 @@ $(document).ready(function() {
     <table class="@jobType table table-striped">
       <tr>
         <th>Name</th>
+        <th>Date</th>
         <th>Status</th>
         <th>Result</th>
         <th>Output</th>
@@ -55,54 +113,19 @@ $(document).ready(function() {
       </tr>
       
     </table>
-    <pre class="@jobType-console pre-scrollable" style="display: none;">
+    
+    <div class="@jobType-console">
+    @**
+      <pre class="pre-scrollable" style="display: none;">
       <code>
-        public@@MS:~/reactive-stocks$ play 
-[info] Loading project definition from /home/public/reactive-stocks/project
-[error] Server access Error: Connection timed out url=http://repo.scala-sbt.org/scalasbt/sbt-plugin-releases/org.aspectj/aspectjtools/1.7.3/jars/aspectjtools.jar
-[info] Set current project to reactive-stocks (in build file:/home/public/reactive-stocks/)
-       _
- _ __ | | __ _ _  _
-| '_ \| |/ _' | || |
-|  __/|_|\____|\__ /
-|_|            |__/
-
-play 2.2.2 built with Scala 2.10.3 (running Java 1.7.0_51), http://www.playframework.com
-
-> Type "help play" or "license" for more information.
-> Type "exit" or use Ctrl+D to leave this console.
-
-[reactive-stocks] $ eclipse
-[info] About to create Eclipse project files for your project(s).
-[info] Updating {file:/home/public/reactive-stocks/}reactive-stocks...
-[info] Resolving com.typesafe.trace#trace-sigar-libs;0.1.1 ...
-[info] downloading http://repo1.maven.org/maven2/com/typesafe/akka/akka-actor_2.10/2.2.1/akka-actor_2.10-2.2.1.jar ...
-[info]  [SUCCESSFUL ] com.typesafe.akka#akka-actor_2.10;2.2.1!akka-actor_2.10.jar (5124ms)
-[info] downloading http://repo1.maven.org/maven2/com/typesafe/akka/akka-slf4j_2.10/2.2.1/akka-slf4j_2.10-2.2.1.jar ...
-[info]  [SUCCESSFUL ] com.typesafe.akka#akka-slf4j_2.10;2.2.1!akka-slf4j_2.10.jar(bundle) (951ms)
-[info] downloading http://repo1.maven.org/maven2/org/webjars/webjars-play_2.10/2.2.1/webjars-play_2.10-2.2.1.jar ...
-[info]  [SUCCESSFUL ] org.webjars#webjars-play_2.10;2.2.1!webjars-play_2.10.jar (958ms)
-[info] downloading http://repo1.maven.org/maven2/org/webjars/bootstrap/2.3.1/bootstrap-2.3.1.jar ...
-[info]  [SUCCESSFUL ] org.webjars#bootstrap;2.3.1!bootstrap.jar (1701ms)
-[info] downloading http://repo1.maven.org/maven2/org/webjars/flot/0.8.0/flot-0.8.0.jar ...
-[info]  [SUCCESSFUL ] org.webjars#flot;0.8.0!flot.jar (1142ms)
-[info] downloading http://repo.typesafe.com/typesafe/releases/com/typesafe/play/play_2.10/2.2.2/play_2.10-2.2.2-test-sources.jar ...
-[info]  [SUCCESSFUL ] com.typesafe.play#play_2.10;2.2.2!play_2.10.jar(src) (2172ms)
-[info] downloading http://repo.typesafe.com/typesafe/releases/com/typesafe/play/play_2.10/2.2.2/play_2.10-2.2.2.pom ...
-[info]  [SUCCESSFUL ] com.typesafe.play#play_2.10;2.2.2!play_2.10.pom (1407ms)
-[info] downloading http://repo1.maven.org/maven2/org/webjars/requirejs/2.1.8/requirejs-2.1.8.jar ...
-[info]  [SUCCESSFUL ] org.webjars#requirejs;2.1.8!requirejs.jar (953ms)
-[info] downloading http://repo1.maven.org/maven2/org/webjars/webjars-locator/0.6/webjars-locator-0.6.jar ...
-[info]  [SUCCESSFUL ] org.webjars#webjars-locator;0.6!webjars-locator.jar (967ms)
-[info] downloading http://repo1.maven.org/maven2/org/webjars/jquery/1.9.0/jquery-1.9.0.jar ...
-[info]  [SUCCESSFUL ] org.webjars#jquery;1.9.0!jquery.jar (1156ms)
-[info] downloading http://repo1.maven.org/maven2/org/webjars/jquery-colorhelpers/1.1/jquery-colorhelpers-1.1.jar ...
-
-Successfully!
       </code>
-    </pre>  
-  </div>
-  
-  <div id="create-@jobType-modal">
+      </pre>
+    **@      
+    </div>
+    
+    <div id="create-@jobType-modal">
+    </div>
   </div>
 </section>
+
+@footer()

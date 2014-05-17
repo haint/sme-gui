@@ -60,6 +60,11 @@
         }
       });
     });
+
+    //clear modal html when hidden
+    $("#createvm-modal").on("hidden", function() {
+      $(this).html("");
+    });
   });
 </script>
 <div id="create-vm-modal" class="modal hide fade">

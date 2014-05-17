@@ -57,19 +57,19 @@ $(document).ready(function() {
  
  //Get vm status
  $('#vm-list #@name .vm-ip').clickover({
-      placement: 'bottom',
-      onShown : function() {
+    placement: 'bottom',
+    onShown : function() {
 
-        var obj = $(this)[0];
-        var options = obj.options;
-        
-        vmRouter.controllers.vm.VMController.detail("@name").ajax({
-          success: function(data) {
-            options.content = data;
-            obj.show();
-          }
-        });
-      }
-    });
+      var obj = $(this)[0];
+      var options = obj.options;
+      
+      vmRouter.controllers.vm.VMController.detail("@name").ajax({
+        success: function(data) {
+          options.content = data;
+          obj.show();
+        }
+      });
+    }
+  });
 });
  </script>

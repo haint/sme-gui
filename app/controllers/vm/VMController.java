@@ -4,8 +4,10 @@
 package controllers.vm;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
@@ -81,7 +83,7 @@ public class VMController extends Controller {
     
     for (int i = 0; i < number; i++) {
 
-      String name = "slave-" + new Random().nextInt(Integer.MAX_VALUE);
+      String name = "vm-" + new Random().nextInt(Integer.MAX_VALUE);
 
       Date date = new Date(System.currentTimeMillis());
       obj.put("name", name);
@@ -232,7 +234,7 @@ public class VMController extends Controller {
           
           queue.add("Checking sshd on " + ipAddress);
           
-          if (SSHClient.checkEstablished(ipAddress, 22, 120) && knife.bootstrap(vm.nic[0].ipAddress, vm.name, queue, cookbook)) {
+          if (SSHClient.checkEstablished(ipAddress, 22, 120) && knife.bootstrap(vm.nic[0].ipAddress, vm.name, queue, Arrays.asList(cookbook, "jmeter").toArray(new String[]{}))) {
             collection.save(dbObj);
           } else {
             dbObj = collection.findOne(new BasicDBObject("name", name));

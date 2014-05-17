@@ -14,12 +14,16 @@ import com.mongodb.ServerAddress;
  * May 13, 2014
  */
 public class DBFactory {
+  
+  private static MongoClient client;
 
   public static DB getDatabase() {
     try {
       ServerAddress address = new ServerAddress("172.27.4.48");
       MongoClientOptions options = new MongoClientOptions.Builder().build();
-      MongoClient client = new MongoClient(address, options);
+      if (client == null) {
+        client = new MongoClient(address, options);
+      }
       return client.getDB("sme");
     } catch (Exception e) {
       e.printStackTrace();
