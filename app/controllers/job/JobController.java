@@ -102,9 +102,20 @@ public class JobController extends Controller {
     //
     DynamicForm form = Form.form().bindFromRequest();
     Map<String, String> map = form.data();
+    DBCollection collection = DBFactory.getDatabase().getCollection("job");
+    DBCollection counter = DBFactory.getDatabase().getCollection("job_counter");
+    DBObject count = counter.findOne();
+    if (count == null) {
+      count = new BasicDBObject("count", 1);
+      counter.insert(count);
+    } else {
+      Integer number = (Integer)count.get("count") + 1;
+      count.put("count", number);
+      counter.save(count);
+    }
     
     //
-    String jobName = "job-" + new Random().nextInt(Integer.MAX_VALUE);
+    String jobName = "job-" + count.get("count");
     String jobStatus = "Pending";
     String jobResult = "N/A";
 
@@ -120,7 +131,7 @@ public class JobController extends Controller {
     map.put("date", new Date().toString());
     
     //
-    DBCollection collection = DBFactory.getDatabase().getCollection("job");
+    
     BasicDBObject jobObj = new BasicDBObject(map);
     collection.insert(jobObj);
     
@@ -263,24 +274,44 @@ public class JobController extends Controller {
             while (true) {
               
               if("selenium".equals(obj.get("type"))) {
+                
                 DBObject vm = DBFactory.getDatabase().getCollection("vm").findOne(new BasicDBObject("name", obj.get("vm")));
-                if ("Available".equals(vm.get("status"))) break;
+                if ("Available".equals(vm.get("status"))) {
+                  
+                  if (obj.get("goals") == null || obj.get("goals").toString().isEmpty()) {
+                    obj.put("goals", "clean install");
+                  } else {
+                    obj.put("goals", "clean install " + obj.get("goals"));
+                  }
+                  
+                  break;
+                }
                 
               } else if ("performance".equals(obj.get("type"))) {
+                
                 int number = Integer.parseInt((String)obj.get("number"));
                 boolean available = true;
+                
+                StringBuilder sb = new StringBuilder();
+                
                 for (int i = 0; i < number; i++) {
                   String vmName = (String) obj.get("vm["+ i + "]");
                   DBObject vm = DBFactory.getDatabase().getCollection("vm").findOne(new BasicDBObject("name", vmName));
                   if (!"Available".equals(vm.get("status"))) available = false;
+                  sb.append(vm.get("ip"));
+                  if (i < number - 1) sb.append(",");
                 }
                 
-                if (available) break;
+                if (available) {
+                  obj.put("goals", "verify -Pperformance -Dtest.server=" + sb.toString());
+                  break;
+                }
               }
               
               Thread.sleep(1000);
               
             }
+            
             obj.put("status", "In Progress");
             jobCol.save(obj);
             

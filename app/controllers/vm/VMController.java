@@ -75,6 +75,7 @@ public class VMController extends Controller {
     }
     
     DBCollection collection = DBFactory.getDatabase().getCollection("vm");
+    DBCollection counter = DBFactory.getDatabase().getCollection("vm_counter");
     
     ObjectNode json = Json.newObject();
     
@@ -82,8 +83,18 @@ public class VMController extends Controller {
     ArrayNode console = json.putArray("console");
     
     for (int i = 0; i < number; i++) {
-
-      String name = "vm-" + new Random().nextInt(Integer.MAX_VALUE);
+      
+      DBObject count = counter.findOne();
+      if (count == null) {
+        count = new BasicDBObject("count", 1);
+        counter.insert(count);
+      } else {
+        Integer n = (Integer)count.get("count") + 1;
+        count.put("count", n);
+        counter.save(count);
+      }
+      
+      String name = "vm-" + count.get("count");
 
       Date date = new Date(System.currentTimeMillis());
       obj.put("name", name);

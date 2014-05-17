@@ -140,10 +140,8 @@ $(document).ready(function() {
   //edit job
   @if(!job.isEmpty()){
     
-    @**
     checker = $('<i class="icon-ok icon-3x" style="float: right; color: #9bb921;"></i>');
     $(checker).insertBefore($("#choice-vm-list #@job.get("vm") .content"));
-    **@
     
     $("#@jobType-setup-wizard button.btn-next").prop('disabled', false);
     
@@ -197,7 +195,7 @@ $(document).ready(function() {
         </div>
         
         <div class="control-group">
-          <label class="control-label">Goals and options</label>
+          <label class="control-label">Profiles (optional)</label>
           <div class="controls">
             <input style="width: 325px;" type="text" name="goals" value="@job.get("goals")">
           </div>
